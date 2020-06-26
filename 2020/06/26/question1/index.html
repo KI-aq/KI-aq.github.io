@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Educational Codeforces Round 90部分题解 | Blog of KI-aq</title>
+  <title>Windows下hexo搭建，git的ssh端口错误 | Blog of KI-aq</title>
   <meta name="author" content="Akira Chin">
   
-  <meta name="description" content="声明本篇为待解决问题篇，欢迎各位dalao指教">
+  <meta name="description" content="声明本篇为待解决问题篇，欢迎各位dalao私信邮箱KI_aq@outlook.com指教(留言区没修好的锅)">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Educational Codeforces Round 90部分题解"/>
+  <meta property="og:title" content="Windows下hexo搭建，git的ssh端口错误"/>
   <meta property="og:site_name" content="Blog of KI-aq"/>
 
   
@@ -55,18 +55,35 @@
       
       
   
-    <h1 class="p-name title" itemprop="headline name">Educational Codeforces Round 90部分题解</h1>
+    <h1 class="p-name title" itemprop="headline name">Windows下hexo搭建，git的ssh端口错误</h1>
   
 
     </header>
     <div class="e-content entry" itemprop="articleBody">
       
-        <h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>本篇为待解决问题篇，欢迎各位dalao指教</p>
+        <h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>本篇为待解决问题篇，欢迎各位dalao私信邮箱<a href="mailto:KI_aq@outlook.com">KI_aq@outlook.com</a>指教(留言区没修好的锅)</p>
 <a id="more"></a>
 <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>当我像平常一样执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<p>的时候，出现了如下问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nothing to commit, working tree clean</span><br><span class="line">ssh: connect to host github.com port 22: Connection timed out</span><br><span class="line">fatal: Could not read from remote repository.</span><br></pre></td></tr></table></figure>
+<p>给出来的反馈应该是端口问题的</p>
+<p>按照网上的步骤 用443端口连接了一次github，命令如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T -p 443 git@ssh.github.com</span><br></pre></td></tr></table></figure>
-<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3>
+<p>却能连接成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hi KI-aq! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</span><br></pre></td></tr></table></figure>
+<p>对于hexo而言的话，改的方式就是如下</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#repository: git@github.com:XXX/XXX.github.io.git</span></span><br><span class="line"><span class="attr">repository:</span> <span class="string">https://github.com/XXX/XXX.github.io.git</span></span><br></pre></td></tr></table></figure>
+<p>其中XXX为用户名<br>当修改完成以后，使用hexo d，会自动弹出窗口登录一次github</p>
+<p>对于git而言的话</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --<span class="built_in">local</span> -e</span><br></pre></td></tr></table></figure>
+<p>将</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url &#x3D; git@github.com:XXX&#x2F;XXX.git</span><br></pre></td></tr></table></figure>
+<p>改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url &#x3D; https:&#x2F;&#x2F;github.com&#x2F;XXX&#x2F;XXX.git</span><br></pre></td></tr></table></figure>
+<p>即可<br>（本人未尝试，谨慎操作）</p>
+<h2 id="参考连接"><a href="#参考连接" class="headerlink" title="参考连接"></a>参考连接</h2><p><a href="https://blog.csdn.net/qq_17335153/article/details/51701700" target="_blank" rel="noopener">解决ssh-connect-to-host-github-com-port-22-connection-timed-out</a><br><a href="https://blog.csdn.net/okokyu/article/details/99681636" target="_blank" rel="noopener">转载 ssh: connect to host github.com port 22: Connection timed out</a></p>
+
       
     </div>
     <footer>
